@@ -291,19 +291,19 @@ export default function ApiKeysPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen h-full bg-white flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-100">
+      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center space-x-8">
+          <div className="flex justify-between items-center h-16 flex-wrap sm:flex-nowrap gap-2">
+            <div className="flex items-center space-x-4 sm:space-x-8">
               <div className="flex items-center space-x-2">
-                <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-8 h-8" />
-                <h1 className="text-2xl font-bold text-gray-900">
+                <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-6 h-6 sm:w-8 sm:h-8" />
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
                   Qwery
                 </h1>
               </div>
-              <div className="hidden md:flex space-x-4">
+              <div className="hidden lg:flex space-x-2 xl:space-x-4">
                 <Link
                   href="/dashboard"
                   className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
@@ -324,11 +324,11 @@ export default function ApiKeysPage() {
                 </Link>
               </div>
             </div>
-            <div className="flex items-center space-x-4">
-              <span className="text-gray-700 font-medium">{user?.name}</span>
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <span className="text-xs sm:text-sm md:text-base text-gray-700 font-medium truncate max-w-[100px] sm:max-w-[150px] md:max-w-none">{user?.name}</span>
               <button
                 onClick={handleLogout}
-                className="px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
               >
                 Logout
               </button>
@@ -338,16 +338,16 @@ export default function ApiKeysPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
         {/* Header */}
-        <div className="mb-8 flex justify-between items-center">
+        <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900 mb-2">API Keys</h2>
-            <p className="text-gray-600">Manage your API keys for accessing the Qwery API</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">API Keys</h2>
+            <p className="text-sm sm:text-base text-gray-600">Manage your API keys for accessing the Qwery API</p>
           </div>
           <button
             onClick={() => setShowCreateForm(!showCreateForm)}
-            className="px-6 py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors"
+            className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors text-sm sm:text-base whitespace-nowrap"
           >
             {showCreateForm ? 'Cancel' : '+ New API Key'}
           </button>

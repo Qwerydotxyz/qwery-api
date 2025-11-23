@@ -1,0 +1,24 @@
+{
+  "name": "Qwery - Solana API Platform",
+  "short_name": "Qwery",
+  "description": "Solana blockchain data API with Phantom wallet authentication",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "icons": [
+    {
+      "src": "/cropped_circle_image.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/cropped_circle_image.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
+

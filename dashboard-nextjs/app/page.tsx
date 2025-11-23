@@ -32,18 +32,18 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen h-full bg-white flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-100">
+      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-2">
               <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-8 h-8" />
-              <h1 className="text-2xl font-bold text-gray-900">Qwery</h1>
+              <h1 className="text-xl sm:text-2xl font-bold text-gray-900">Qwery</h1>
             </div>
             <button
               onClick={handleLogin}
-              className="px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors"
+              className="px-4 sm:px-6 py-2 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors text-sm sm:text-base"
             >
               Connect Wallet
             </button>
@@ -52,22 +52,22 @@ export default function Home() {
       </nav>
 
       {/* Hero Section */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 lg:py-20 w-full">
         <div className="text-center">
-          <div className="flex justify-center mb-8">
-            <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-24 h-24" />
+          <div className="flex justify-center mb-6 sm:mb-8">
+            <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-20 h-20 sm:w-24 sm:h-24" />
           </div>
-          <h1 className="text-5xl font-bold text-gray-900 mb-6">
+          <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 px-4">
             Welcome to Qwery
           </h1>
-          <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
+          <p className="text-base sm:text-lg md:text-xl text-gray-600 mb-6 sm:mb-8 max-w-2xl mx-auto px-4">
             Access powerful Solana blockchain data through our API. Connect your Phantom wallet to get started.
           </p>
           <button
             onClick={handleLogin}
-            className="px-8 py-4 bg-orange-500 text-white rounded-lg font-semibold text-lg hover:bg-orange-600 transition-colors inline-flex items-center space-x-2"
+            className="px-6 sm:px-8 py-3 sm:py-4 bg-orange-500 text-white rounded-lg font-semibold text-base sm:text-lg hover:bg-orange-600 transition-colors inline-flex items-center space-x-2"
           >
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
             </svg>
             <span>Connect Phantom Wallet</span>
@@ -75,7 +75,7 @@ export default function Home() {
         </div>
 
         {/* Features */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-3 gap-8">
+        <div className="mt-12 sm:mt-16 lg:mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
           <div className="bg-white p-6 rounded-xl border border-gray-100">
             <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
               <svg className="w-6 h-6 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
