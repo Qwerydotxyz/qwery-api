@@ -31,7 +31,9 @@ export function Providers({ children }: { children: React.ReactNode }) {
 
         // 📱 Embedded wallet settings
         embeddedWallets: {
-          createOnLogin: 'off', // Don't create embedded wallets
+          solana: {
+            createOnLogin: 'off', // Don't create embedded wallets
+          },
         },
       }}
     >

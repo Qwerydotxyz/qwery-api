@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import api from '@/lib/api';
+import { API_V1_URL, API_BASE_URL } from '@/lib/config';
 
 interface UserProfile {
   name: string;
@@ -91,7 +92,7 @@ export default function DocumentationPage() {
       console.log('Final wallet address to authenticate:', walletAddress);
 
       // Authenticate wallet with backend
-      const authResponse = await fetch('http://localhost:3000/api/v1/auth/wallet', {
+      const authResponse = await fetch(`${API_V1_URL}/auth/wallet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

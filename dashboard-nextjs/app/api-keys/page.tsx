@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { usePrivy, useWallets } from '@privy-io/react-auth';
 import api from '@/lib/api';
+import { API_V1_URL } from '@/lib/config';
 
 interface ApiKey {
   id: number | string;
@@ -92,7 +93,7 @@ export default function ApiKeysPage() {
       console.log('Final wallet address to authenticate:', walletAddress);
 
       // Authenticate wallet with backend
-      const authResponse = await fetch('http://localhost:3000/api/v1/auth/wallet', {
+      const authResponse = await fetch(`${API_V1_URL}/auth/wallet`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -139,7 +140,7 @@ export default function ApiKeysPage() {
 
     try {
       // Call backend API to create key
-      const response = await fetch('http://localhost:3000/api/v1/dashboard/api-keys', {
+      const response = await fetch(`${API_V1_URL}/dashboard/api-keys`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -195,7 +196,7 @@ export default function ApiKeysPage() {
 
     try {
       // Call backend API to delete
-      const response = await fetch(`http://localhost:3000/api/v1/dashboard/api-keys/${keyId}`, {
+      const response = await fetch(`${API_V1_URL}/dashboard/api-keys/${keyId}`, {
         method: 'DELETE',
       });
 
