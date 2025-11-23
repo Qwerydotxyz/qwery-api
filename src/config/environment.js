@@ -6,41 +6,45 @@ const config = {
   port: process.env.PORT || 3000,
   nodeEnv: process.env.NODE_ENV || 'development',
   
-  // Bitquery Configuration (kept private)
-  bitquery: {
-    // Primary key from env, plus fallbacks provided
-    apiKeys: [
-      process.env.BITQUERY_API_KEY,
-      'ory_at_lOVqx_pZ5gRRH_pRdxHiyaASakBERKCxnjxmE9nmvIE.mOI084SbLYFaBmwgFASPO0sggBTZI063fDfOTGYm0qU',
-      'ory_at_ZxirfqGZJw2yRWTsaNcwOlEHFwYGdsatSy2QPgJoqWU.QRw45WPyEZZITOpFYPx7trnejkIc4Ds9xrco0YgUGmE',
-      'ory_at_eAr-OzxUy8QHNMvvcJ0QeExSB7HehXgkl0WwBU8KfJg.JW11SFPrnW49GZ4z3vIqU31R52z-fSgImZMoOqAZB6I'
-    ].filter(Boolean),
-    endpoint: process.env.BITQUERY_ENDPOINT || 'https://streaming.bitquery.io/graphql',
-    timeout: 30000, // 30 seconds
-  },
+  // Database
+  databaseUrl: process.env.DATABASE_URL,
   
-  // Rate Limiting
-  rateLimit: {
-    windowMs: (process.env.API_RATE_LIMIT_WINDOW || 15) * 60 * 1000, // minutes to ms
-    maxRequests: process.env.API_RATE_LIMIT_MAX_REQUESTS || 100,
-  },
+  // BitQuery API Keys - Support multiple keys for rotation
+  bitqueryApiKeys: [
+    process.env.BITQUERY_API_KEY_1,
+    process.env.BITQUERY_API_KEY_2,
+    process.env.BITQUERY_API_KEY_3,
+    process.env.BITQUERY_API_KEY_4,
+    process.env.BITQUERY_API_KEY, // Also support single key for backward compatibility
+  ].filter(Boolean), // Remove undefined values
   
-  // API Configuration
-  api: {
-    prefix: '/api/v1',
-    corsOrigins: process.env.CORS_ORIGINS?.split(',') || ['http://localhost:3001', 'http://localhost:3000', 'http://localhost:5173'],
-  },
+  // JWT
+  jwtSecret: process.env.JWT_SECRET || 'default-secret-change-in-production',
+  jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
+  
+  // CORS
+  corsOrigins: process.env.CORS_ORIGINS 
+    ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+    : ['http://localhost:3001', 'http://localhost:3000'],
 };
 
 // Validate required environment variables
-const validateConfig = () => {
-  const required = ['BITQUERY_API_KEY'];
+function validateConfig() {
+  const required = [
+    'DATABASE_URL',
+  ];
+  
   const missing = required.filter(key => !process.env[key]);
+  
+  // Check if at least one BitQuery key exists
+  if (config.bitqueryApiKeys.length === 0) {
+    missing.push('BITQUERY_API_KEY (or BITQUERY_API_KEY_1, _2, _3, _4)');
+  }
   
   if (missing.length > 0) {
     throw new Error(`Missing required environment variables: ${missing.join(', ')}`);
   }
-};
+}
 
 validateConfig();
 
