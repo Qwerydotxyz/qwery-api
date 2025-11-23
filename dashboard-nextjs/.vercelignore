@@ -1,0 +1,20 @@
+# Test files
+**/*.test.js
+**/*.test.ts
+**/*.spec.js
+**/*.spec.ts
+**/test/**
+**/tests/**
+
+# Node modules test directories
+node_modules/**/test
+node_modules/**/tests
+
+# Development files
+*.md
+.env.local
+.env.development
+
+# Git files
+.git
+.gitignore
