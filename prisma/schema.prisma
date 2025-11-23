@@ -1,0 +1,84 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id            String    @id @default(uuid())
+  email         String?   @unique
+  password      String?
+  name          String?
+  walletAddress String?   @unique // Solana wallet address
+  planType      String    @default("free") // free, pro, enterprise
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  apiKeys       ApiKey[]
+  usageLogs     UsageLog[]
+  
+  @@map("users")
+}
+
+model ApiKey {
+  id            String    @id @default(uuid())
+  userId        String
+  keyHash       String    @unique // Hashed API key
+  keyPrefix     String    // First 8 chars for display (sk_live_abc...)
+  name          String    @default("My API Key")
+  isActive      Boolean   @default(true)
+  rateLimit     Int       @default(1000) // Requests per hour
+  expiresAt     DateTime?
+  lastUsedAt    DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  usageLogs     UsageLog[]
+  
+  @@index([userId])
+  @@index([keyHash])
+  @@map("api_keys")
+}
+
+model UsageLog {
+  id            String    @id @default(uuid())
+  userId        String
+  apiKeyId      String
+  endpoint      String
+  method        String
+  statusCode    Int
+  responseTime  Int       // in milliseconds
+  ipAddress     String?
+  userAgent     String?
+  timestamp     DateTime  @default(now())
+  
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  apiKey        ApiKey    @relation(fields: [apiKeyId], references: [id], onDelete: Cascade)
+  
+  @@index([userId])
+  @@index([apiKeyId])
+  @@index([timestamp])
+  @@map("usage_logs")
+}
+
+model Plan {
+  id            String    @id @default(uuid())
+  name          String    @unique // free, pro, enterprise
+  displayName   String
+  price         Float     @default(0)
+  rateLimit     Int       // Requests per hour
+  features      String[]  // Array of feature descriptions
+  isActive      Boolean   @default(true)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  
+  @@map("plans")
+}

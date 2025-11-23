@@ -1,0 +1,78 @@
+# Dependencies
+node_modules/
+dashboard-nextjs/node_modules/
+**/node_modules/
+
+# Environment variables
+.env
+.env.local
+.env.production
+.env.development
+dashboard-nextjs/.env
+dashboard-nextjs/.env.local
+dashboard-nextjs/.env.production
+dashboard-nextjs/.env.development
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+server.log
+
+# Build outputs
+dashboard-nextjs/.next/
+dashboard-nextjs/out/
+dashboard-nextjs/build/
+dist/
+build/
+.next/
+out/
+
+# OS files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Prisma
+prisma/.env
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+*.tmp
+*.temp
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Compressed files
+*.zip
+*.tar.gz
+*.rar
+
+# Next.js cache
+.turbo/
+
+# Vercel
+.vercel
+
+# TypeScript
+*.tsbuildinfo
+next-env.d.ts
+
