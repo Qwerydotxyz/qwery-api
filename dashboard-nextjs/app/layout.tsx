@@ -14,8 +14,13 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Qwery - Solana API",
+  title: "Qwery - Solana API Platform",
   description: "Solana blockchain data API with Phantom wallet authentication",
+  icons: {
+    icon: '/cropped_circle_image.png',
+    shortcut: '/cropped_circle_image.png',
+    apple: '/cropped_circle_image.png',
+  },
 };
 
 export default function RootLayout({
