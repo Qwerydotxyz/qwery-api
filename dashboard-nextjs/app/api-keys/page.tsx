@@ -109,16 +109,39 @@ export default function ApiKeysPage() {
           name: authResult.data.user.name,
         });
 
-        // Transform backend data to frontend format
+        // Get stored full keys from localStorage
+        const storedKeys = localStorage.getItem('apiKeys');
+        const fullKeysMap: { [id: string]: string } = {};
+        
+        if (storedKeys) {
+          try {
+            const parsedKeys = JSON.parse(storedKeys);
+            // Create a map of id -> full key for keys that have full keys stored
+            parsedKeys.forEach((key: any) => {
+              if (key.key && key.key.startsWith('qwery_') && key.key.length > 20) {
+                fullKeysMap[key.id] = key.key;
+              }
+            });
+          } catch (e) {
+            console.error('Error parsing stored keys:', e);
+          }
+        }
+
+        // Transform backend data and merge with stored full keys
         const transformedKeys = authResult.data.apiKeys.map((key: any) => ({
           id: key.id,
-          key: key.keyPrefix,
+          key: fullKeysMap[key.id] || key.keyPrefix, // Use full key if available, otherwise prefix
           name: key.name,
           createdAt: key.createdAt,
           lastUsed: key.lastUsedAt,
           requestCount: key.requestCount || 0,
         }));
+        
         setApiKeys(transformedKeys);
+        
+        // Update localStorage with merged data
+        localStorage.setItem('apiKeys', JSON.stringify(transformedKeys));
+        
         setError('');
       } else {
         setError('Failed to authenticate wallet: ' + (authResult.error?.message || 'Unknown error'));
@@ -377,14 +400,25 @@ export default function ApiKeysPage() {
               >
                 <div className="flex justify-between items-start">
                   <div className="flex-1">
-                    <h4 className="text-lg font-semibold text-gray-900 mb-2">{apiKey.name}</h4>
+                    <div className="flex items-center gap-2 mb-2">
+                      <h4 className="text-lg font-semibold text-gray-900">{apiKey.name}</h4>
+                      {apiKey.key.length > 20 ? (
+                        <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
+                          Full Key Saved
+                        </span>
+                      ) : (
+                        <span className="px-2 py-1 bg-gray-200 text-gray-600 text-xs font-semibold rounded">
+                          Prefix Only
+                        </span>
+                      )}
+                    </div>
                     <div className="flex items-center space-x-2 mb-3">
-                      <code className="px-3 py-2 bg-gray-100 rounded-lg text-sm font-mono text-gray-700 flex-1">
+                      <code className="px-3 py-2 bg-gray-100 rounded-lg text-sm font-mono text-gray-700 flex-1 break-all">
                         {apiKey.key}
                       </code>
                       <button
                         onClick={() => handleCopyKey(apiKey.key)}
-                        className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors"
+                        className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors flex-shrink-0"
                         title="Copy to clipboard"
                       >
                         {copiedKey === apiKey.key ? (
@@ -398,6 +432,11 @@ export default function ApiKeysPage() {
                         )}
                       </button>
                     </div>
+                    {apiKey.key.length <= 20 && (
+                      <p className="text-xs text-amber-600 mb-2">
+                        ⚠️ This is a preview. Full key was shown only once during creation.
+                      </p>
+                    )}
                     <div className="flex items-center space-x-6 text-sm text-gray-600">
                       <span>
                         Created: {new Date(apiKey.createdAt).toLocaleDateString()}
@@ -428,20 +467,29 @@ export default function ApiKeysPage() {
         )}
 
         {/* Info Box */}
-        <div className="mt-8 bg-gray-50 border border-gray-200 rounded-xl p-6">
+        <div className="mt-8 bg-blue-50 border border-blue-200 rounded-xl p-6">
           <div className="flex items-start space-x-4">
-            <svg className="w-6 h-6 text-gray-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 text-blue-600 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <h4 className="font-semibold text-gray-900 mb-2">Important Security Information</h4>
-              <ul className="text-gray-700 text-sm space-y-1 list-disc list-inside">
-                <li>All API keys start with <code className="bg-gray-200 px-2 py-1 rounded">qwery_</code> prefix</li>
-                <li>API keys are saved in your browser's localStorage and persist across sessions</li>
-                <li>Keep your API keys secure and never share them publicly</li>
-                <li>Include your API key in the Authorization header: <code className="bg-gray-200 px-2 py-1 rounded">x-api-key: YOUR_KEY</code></li>
-                <li>Delete any API keys you're no longer using</li>
-                <li>Each API key is unique to your account</li>
+              <h4 className="font-semibold text-gray-900 mb-2">How API Keys Work</h4>
+              <ul className="text-gray-700 text-sm space-y-2 list-disc list-inside">
+                <li>
+                  <strong>Full Keys:</strong> When you create an API key, the full key is saved in your browser's localStorage and will persist as long as you use the same browser and don't clear your cache.
+                </li>
+                <li>
+                  <strong>Prefix Only:</strong> If you clear your browser cache or use a different device, you'll only see the key prefix (first 13 characters). The full key is stored securely in the database but never shown again.
+                </li>
+                <li>
+                  All API keys start with <code className="bg-gray-200 px-2 py-1 rounded">qwery_</code> prefix
+                </li>
+                <li>
+                  Include your API key in requests using the header: <code className="bg-gray-200 px-2 py-1 rounded">X-API-Key: YOUR_KEY</code>
+                </li>
+                <li>
+                  <strong>Security:</strong> Keep your API keys secure and never share them publicly. Delete any keys you're no longer using.
+                </li>
               </ul>
             </div>
           </div>
