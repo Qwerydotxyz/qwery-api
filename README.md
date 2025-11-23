@@ -140,10 +140,8 @@ Create a `.env` file in the root directory (`solana-api/.env`):
 # Database
 DATABASE_URL="postgresql://username:password@host:5432/database?sslmode=require"
 
-# BitQuery API Keys (get from https://bitquery.io/)
-BITQUERY_API_KEY_1="your_bitquery_key_1"
-BITQUERY_API_KEY_2="your_bitquery_key_2"
-BITQUERY_API_KEY_3="your_bitquery_key_3"
+# Qwery API Keys (get from https://qwery.xyz/)
+QWERY_API="Your Qwery Api"
 
 # JWT Secret (change in production!)
 JWT_SECRET="your-super-secret-jwt-key-minimum-32-characters-long"
