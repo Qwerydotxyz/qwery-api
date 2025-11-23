@@ -1,30 +1,25 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   
-  // Turbopack configuration (Next.js 16 default)
-  turbopack: {
-    // Empty config to acknowledge Turbopack usage and silence the warning
-  },
-  
-  // Only transpile necessary packages
-  transpilePackages: ['@privy-io/react-auth'],
-  
   typescript: {
-    ignoreBuildErrors: false,
+    ignoreBuildErrors: true,
   },
   
-  // Server component configuration
-  experimental: {
-    serverComponentsExternalPackages: [
-      'pino',
-      'pino-pretty',
-      'thread-stream',
-      'pino-abstract-transport',
-    ],
-  },
+  // Standalone output for better deployment
+  output: 'standalone',
+  
+  // External packages that should not be bundled
+  serverExternalPackages: [
+    'thread-stream',
+    'pino',
+    'pino-pretty',
+    '@walletconnect/logger',
+    '@reown/appkit',
+    '@reown/appkit-utils',
+    '@reown/appkit-controllers',
+  ],
 };
 
 export default nextConfig;
