@@ -33,6 +33,7 @@ export default function ApiKeysPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [newlyCreatedKey, setNewlyCreatedKey] = useState<string | null>(null);
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
@@ -295,7 +296,7 @@ export default function ApiKeysPage() {
       {/* Navigation */}
       <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16 flex-wrap sm:flex-nowrap gap-2">
+          <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4 sm:space-x-8">
               <div className="flex items-center space-x-2">
                 <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-6 h-6 sm:w-8 sm:h-8" />
@@ -325,15 +326,69 @@ export default function ApiKeysPage() {
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <span className="text-xs sm:text-sm md:text-base text-gray-700 font-medium truncate max-w-[100px] sm:max-w-[150px] md:max-w-none">{user?.name}</span>
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base text-gray-700 font-medium truncate max-w-[100px] sm:max-w-[150px] md:max-w-none">{user?.name}</span>
               <button
                 onClick={handleLogout}
-                className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
+                className="hidden sm:block px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
               >
                 Logout
               </button>
+              {/* Mobile menu button */}
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+              >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  {mobileMenuOpen ? (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  ) : (
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+                  )}
+                </svg>
+              </button>
             </div>
           </div>
+          
+          {/* Mobile menu */}
+          {mobileMenuOpen && (
+            <div className="lg:hidden py-4 border-t border-gray-100">
+              <div className="flex flex-col space-y-2">
+                <Link
+                  href="/dashboard"
+                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href="/api-keys"
+                  className="px-3 py-2 rounded-lg text-orange-600 bg-orange-50 font-semibold"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  API Keys
+                </Link>
+                <Link
+                  href="/documentation"
+                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Documentation
+                </Link>
+                <div className="pt-2 border-t border-gray-100">
+                  <p className="px-3 py-2 text-sm text-gray-600">{user?.name}</p>
+                  <button
+                    onClick={() => {
+                      setMobileMenuOpen(false);
+                      handleLogout();
+                    }}
+                    className="w-full text-left px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Logout
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </nav>
 
@@ -374,20 +429,20 @@ export default function ApiKeysPage() {
 
         {/* Newly Created Key Alert - Special Highlight */}
         {newlyCreatedKey && (
-          <div className="mb-6 p-6 bg-orange-50 border-2 border-orange-500 rounded-xl shadow-lg">
-            <div className="flex items-start gap-4">
+          <div className="mb-6 p-4 sm:p-6 bg-orange-50 border-2 border-orange-500 rounded-xl shadow-lg">
+            <div className="flex flex-col sm:flex-row items-start gap-4">
               <div className="flex-shrink-0">
-                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-6 h-6 sm:w-8 sm:h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
                 </svg>
               </div>
-              <div className="flex-1">
-                <h3 className="text-lg font-bold text-gray-900 mb-2">🎉 Your New API Key (Save This Now!)</h3>
-                <p className="text-sm text-gray-700 mb-4">
+              <div className="flex-1 w-full">
+                <h3 className="text-base sm:text-lg font-bold text-gray-900 mb-2">🎉 Your New API Key (Save This Now!)</h3>
+                <p className="text-xs sm:text-sm text-gray-700 mb-4">
                   This is the only time you'll see the full key. Copy it and save it securely. It's already saved in your browser's localStorage.
                 </p>
-                <div className="flex items-center gap-2 mb-4">
-                  <code className="flex-1 px-4 py-3 bg-white border-2 border-orange-300 rounded-lg text-sm font-mono text-gray-900 break-all">
+                <div className="flex flex-col sm:flex-row items-stretch gap-2 mb-4">
+                  <code className="flex-1 px-3 sm:px-4 py-2 sm:py-3 bg-white border-2 border-orange-300 rounded-lg text-xs sm:text-sm font-mono text-gray-900 break-all overflow-x-auto">
                     {newlyCreatedKey}
                   </code>
                   <button
@@ -395,14 +450,14 @@ export default function ApiKeysPage() {
                       handleCopyKey(newlyCreatedKey);
                       setTimeout(() => setNewlyCreatedKey(null), 3000); // Hide after copying
                     }}
-                    className="px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors flex-shrink-0"
+                    className="px-4 sm:px-6 py-2 sm:py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors flex-shrink-0 text-sm sm:text-base"
                   >
                     {copiedKey === newlyCreatedKey ? '✓ Copied!' : 'Copy Key'}
                   </button>
                 </div>
                 <button
                   onClick={() => setNewlyCreatedKey(null)}
-                  className="text-sm text-orange-600 hover:text-orange-800 underline"
+                  className="text-xs sm:text-sm text-orange-600 hover:text-orange-800 underline"
                 >
                   I've saved it, dismiss this
                 </button>
@@ -459,12 +514,12 @@ export default function ApiKeysPage() {
             {apiKeys.map((apiKey, index) => (
               <div
                 key={apiKey.id}
-                className="bg-white rounded-xl shadow-sm p-6 border border-gray-100"
+                className="bg-white rounded-xl shadow-sm p-4 sm:p-6 border border-gray-100"
               >
-                <div className="flex justify-between items-start">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-2">
-                      <h4 className="text-lg font-semibold text-gray-900">{apiKey.name}</h4>
+                <div className="flex flex-col sm:flex-row justify-between items-start gap-4">
+                  <div className="flex-1 w-full">
+                    <div className="flex flex-wrap items-center gap-2 mb-2">
+                      <h4 className="text-base sm:text-lg font-semibold text-gray-900">{apiKey.name}</h4>
                       {apiKey.key.length > 20 ? (
                         <span className="px-2 py-1 bg-green-100 text-green-700 text-xs font-semibold rounded">
                           Full Key Saved
@@ -475,23 +530,29 @@ export default function ApiKeysPage() {
                         </span>
                       )}
                     </div>
-                    <div className="flex items-center space-x-2 mb-3">
-                      <code className="px-3 py-2 bg-gray-100 rounded-lg text-sm font-mono text-gray-700 flex-1 break-all">
+                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center space-y-2 sm:space-y-0 sm:space-x-2 mb-3">
+                      <code className="px-3 py-2 bg-gray-100 rounded-lg text-xs sm:text-sm font-mono text-gray-700 flex-1 break-all overflow-x-auto">
                         {apiKey.key}
                       </code>
                       <button
                         onClick={() => handleCopyKey(apiKey.key)}
-                        className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors flex-shrink-0"
+                        className="px-4 py-2 bg-orange-100 text-orange-600 rounded-lg hover:bg-orange-200 transition-colors flex-shrink-0 flex items-center justify-center gap-2"
                         title="Copy to clipboard"
                       >
                         {copiedKey === apiKey.key ? (
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                          </svg>
+                          <>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                            </svg>
+                            <span className="sm:hidden">Copied!</span>
+                          </>
                         ) : (
-                          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                          </svg>
+                          <>
+                            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+                            </svg>
+                            <span className="sm:hidden">Copy</span>
+                          </>
                         )}
                       </button>
                     </div>
@@ -500,7 +561,7 @@ export default function ApiKeysPage() {
                         ⚠️ This is a preview. Full key was shown only once during creation.
                       </p>
                     )}
-                    <div className="flex items-center space-x-6 text-sm text-gray-600">
+                    <div className="flex flex-col sm:flex-row sm:items-center sm:space-x-6 space-y-1 sm:space-y-0 text-xs sm:text-sm text-gray-600">
                       <span>
                         Created: {new Date(apiKey.createdAt).toLocaleDateString()}
                       </span>
