@@ -15,8 +15,8 @@ const geistMono = Geist_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL || 'https://dashboard.qwery.xyz'),
-  title: "Qwery - Solana API Platform",
-  description: "Solana blockchain data API with Phantom wallet authentication",
+  title: "Qwery - Solana's developer infrastructure",
+  description: "Architecting Solana’s developer infrastructure with APIs, modular SDKs, and high-performance x402-based facilitation layers.",
   applicationName: "Qwery",
   authors: [{ name: "Qwery" }],
   keywords: ["Solana", "API", "Blockchain", "Phantom Wallet", "Crypto", "Web3"],
