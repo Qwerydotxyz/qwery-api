@@ -22,11 +22,24 @@ const config = {
     timeout: parseInt(process.env.BITQUERY_TIMEOUT || '30000', 10),
   },
   
+  // API Configuration
+  api: {
+    corsOrigins: process.env.CORS_ORIGINS 
+      ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
+      : ['http://localhost:3001', 'http://localhost:3000'],
+  },
+  
+  // Rate Limiting Configuration
+  rateLimit: {
+    windowMs: parseInt(process.env.API_RATE_LIMIT_WINDOW || '15', 10) * 60 * 1000, // Convert minutes to milliseconds
+    maxRequests: parseInt(process.env.API_RATE_LIMIT_MAX_REQUESTS || '100', 10),
+  },
+  
   // JWT
   jwtSecret: process.env.JWT_SECRET || 'default-secret-change-in-production',
   jwtExpiresIn: process.env.JWT_EXPIRES_IN || '7d',
   
-  // CORS
+  // CORS (legacy - keeping for backward compatibility)
   corsOrigins: process.env.CORS_ORIGINS 
     ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
     : ['http://localhost:3001', 'http://localhost:3000'],
