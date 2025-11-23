@@ -26,7 +26,8 @@ const config = {
   api: {
     corsOrigins: process.env.CORS_ORIGINS 
       ? process.env.CORS_ORIGINS.split(',').map(origin => origin.trim())
-      : ['http://localhost:3001', 'http://localhost:3000'],
+      : ['http://localhost:3001', 'http://localhost:3000', 'https://qwery-api.vercel.app'],
+    prefix: '/api/v1',
   },
   
   // Rate Limiting Configuration

@@ -19,8 +19,9 @@ app.use(helmet());
 // CORS configuration
 app.use(cors({
   origin: config.api.corsOrigins,
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key']
+  methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization', 'X-API-Key'],
+  credentials: true
 }));
 
 // Body parser middleware

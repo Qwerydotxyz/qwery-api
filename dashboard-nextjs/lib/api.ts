@@ -1,7 +1,9 @@
 import axios from 'axios';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
-const API_URL = `${API_BASE_URL}/api/v1/dashboard`;
+// Remove trailing slash if present to avoid double slashes
+const cleanBaseUrl = API_BASE_URL.replace(/\/$/, '');
+const API_URL = `${cleanBaseUrl}/api/v1/dashboard`;
 
 const api = axios.create({
   baseURL: API_URL,

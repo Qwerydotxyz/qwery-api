@@ -27,6 +27,10 @@ PORT=10000
 
 # CORS Origins (Update with your Vercel URL after frontend deployment)
 CORS_ORIGINS=http://localhost:3001,https://your-frontend.vercel.app
+
+# Rate Limiting (Optional - defaults are set)
+API_RATE_LIMIT_WINDOW=15
+API_RATE_LIMIT_MAX_REQUESTS=100
 ```
 
 ---
