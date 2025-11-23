@@ -9,14 +9,18 @@ const config = {
   // Database
   databaseUrl: process.env.DATABASE_URL,
   
-  // BitQuery API Keys - Support multiple keys for rotation
-  bitqueryApiKeys: [
-    process.env.BITQUERY_API_KEY_1,
-    process.env.BITQUERY_API_KEY_2,
-    process.env.BITQUERY_API_KEY_3,
-    process.env.BITQUERY_API_KEY_4,
-    process.env.BITQUERY_API_KEY, // Also support single key for backward compatibility
-  ].filter(Boolean), // Remove undefined values
+  // BitQuery Configuration
+  bitquery: {
+    apiKeys: [
+      process.env.BITQUERY_API_KEY_1,
+      process.env.BITQUERY_API_KEY_2,
+      process.env.BITQUERY_API_KEY_3,
+      process.env.BITQUERY_API_KEY_4,
+      process.env.BITQUERY_API_KEY, // Also support single key for backward compatibility
+    ].filter(Boolean), // Remove undefined values
+    endpoint: process.env.BITQUERY_ENDPOINT || 'https://streaming.bitquery.io/graphql',
+    timeout: parseInt(process.env.BITQUERY_TIMEOUT || '30000', 10),
+  },
   
   // JWT
   jwtSecret: process.env.JWT_SECRET || 'default-secret-change-in-production',
@@ -37,7 +41,7 @@ function validateConfig() {
   const missing = required.filter(key => !process.env[key]);
   
   // Check if at least one BitQuery key exists
-  if (config.bitqueryApiKeys.length === 0) {
+  if (config.bitquery.apiKeys.length === 0) {
     missing.push('BITQUERY_API_KEY (or BITQUERY_API_KEY_1, _2, _3, _4)');
   }
   
