@@ -85,64 +85,6 @@ Qwery provides a user-friendly dashboard for accessing Solana blockchain data th
 
 ---
 
-## 📁 Project Structure
-
-```
-solana-api/
-├── dashboard-nextjs/          # Frontend Next.js application
-│   ├── app/
-│   │   ├── api-keys/         # API key management page
-│   │   ├── dashboard/        # Main dashboard page
-│   │   ├── documentation/    # API docs page
-│   │   ├── login/            # Login page (legacy)
-│   │   ├── register/         # Register page (legacy)
-│   │   ├── layout.tsx        # Root layout with Privy provider
-│   │   ├── page.tsx          # Landing page with Phantom login
-│   │   └── providers.tsx     # Privy configuration
-│   ├── lib/
-│   │   └── api.ts           # API client utilities
-│   ├── public/              # Static assets (logo)
-│   ├── package.json
-│   └── next.config.ts
-│
-├── src/                      # Backend Express.js application
-│   ├── server.js            # Main server entry point
-│   ├── config/
-│   │   └── environment.js   # Environment configuration
-│   ├── controllers/         # Route handlers (17 controllers)
-│   │   ├── auth.controller.js
-│   │   ├── walletAuth.controller.js
-│   │   ├── apiKeyManagement.controller.js
-│   │   ├── tokenPrice.controller.js
-│   │   ├── tokenMetadata.controller.js
-│   │   ├── topHolders.controller.js
-│   │   ├── latestTrades.controller.js
-│   │   ├── walletTrades.controller.js
-│   │   ├── bondingCurve.controller.js
-│   │   ├── topPumpfunTokens.controller.js
-│   │   ├── letsbonkBondingCurve.controller.js
-│   │   ├── letsbonkAbove95.controller.js
-│   │   ├── raydiumBondingCurve.controller.js
-│   │   ├── raydiumAbove95.controller.js
-│   │   ├── raydiumGraduated.controller.js
-│   │   ├── balanceUpdates.controller.js
-│   │   └── usage.controller.js
-│   ├── middleware/
-│   │   ├── auth.middleware.js      # JWT authentication
-│   │   └── apiKey.middleware.js    # API key validation
-│   ├── queries/            # BitQuery GraphQL queries
-│   ├── routes/             # Express route definitions
-│   └── services/           # Business logic services
-│
-├── prisma/
-│   ├── schema.prisma       # Database schema
-│   ├── seed.js            # Database seeding script
-│   └── migrations/        # Database migrations
-│
-├── package.json
-├── .env                   # Environment variables (not in git)
-└── README.md             # This file
-```
 
 ---
 
@@ -198,10 +140,8 @@ Create a `.env` file in the root directory (`solana-api/.env`):
 # Database
 DATABASE_URL="postgresql://username:password@host:5432/database?sslmode=require"
 
-# BitQuery API Keys (get from https://bitquery.io/)
-BITQUERY_API_KEY_1="your_bitquery_key_1"
-BITQUERY_API_KEY_2="your_bitquery_key_2"
-BITQUERY_API_KEY_3="your_bitquery_key_3"
+# Qwery API Keys (get from https://qwery.xyz/)
+QWERY_API="Your Qwery Api"
 
 # JWT Secret (change in production!)
 JWT_SECRET="your-super-secret-jwt-key-minimum-32-characters-long"
