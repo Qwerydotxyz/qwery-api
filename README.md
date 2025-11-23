@@ -1,4 +1,4 @@
-# 🚀 Qwery - Solana API Platform
+Qwery - Solana API Platform
 
 **Qwery** is a comprehensive Solana blockchain data API platform with Phantom wallet authentication, API key management, and real-time token analytics.
 
