@@ -33,6 +33,8 @@ export default function ApiKeysPage() {
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
   const [copiedKey, setCopiedKey] = useState<string | null>(null);
+  const [newlyCreatedKey, setNewlyCreatedKey] = useState<string | null>(null);
+  const [walletAddress, setWalletAddress] = useState<string | null>(null);
 
   useEffect(() => {
     console.log('API Keys - Privy ready:', ready, 'authenticated:', authenticated);
@@ -91,6 +93,9 @@ export default function ApiKeysPage() {
       }
 
       console.log('Final wallet address to authenticate:', walletAddress);
+      
+      // Store wallet address in state for use in other functions
+      setWalletAddress(walletAddress);
 
       // Authenticate wallet with backend
       const authResponse = await fetch(`${API_V1_URL}/auth/wallet`, {
@@ -109,22 +114,29 @@ export default function ApiKeysPage() {
           name: authResult.data.user.name,
         });
 
-        // Get stored full keys from localStorage
-        const storedKeys = localStorage.getItem('apiKeys');
+        // Create wallet-specific localStorage key
+        const storageKey = `apiKeys_${walletAddress}`;
+        
+        // Get stored full keys from localStorage (wallet-specific)
+        const storedKeys = localStorage.getItem(storageKey);
         const fullKeysMap: { [id: string]: string } = {};
         
         if (storedKeys) {
           try {
             const parsedKeys = JSON.parse(storedKeys);
+            console.log('📦 Loaded stored keys from localStorage:', parsedKeys.length);
             // Create a map of id -> full key for keys that have full keys stored
             parsedKeys.forEach((key: any) => {
               if (key.key && key.key.startsWith('qwery_') && key.key.length > 20) {
                 fullKeysMap[key.id] = key.key;
+                console.log('✅ Found full key for ID:', key.id);
               }
             });
           } catch (e) {
             console.error('Error parsing stored keys:', e);
           }
+        } else {
+          console.log('📭 No stored keys found in localStorage for this wallet');
         }
 
         // Transform backend data and merge with stored full keys
@@ -137,10 +149,13 @@ export default function ApiKeysPage() {
           requestCount: key.requestCount || 0,
         }));
         
+        console.log('🔑 Total API keys loaded:', transformedKeys.length);
+        console.log('💾 Full keys preserved:', Object.keys(fullKeysMap).length);
+        
         setApiKeys(transformedKeys);
         
-        // Update localStorage with merged data
-        localStorage.setItem('apiKeys', JSON.stringify(transformedKeys));
+        // Update localStorage with merged data (wallet-specific)
+        localStorage.setItem(storageKey, JSON.stringify(transformedKeys));
         
         setError('');
       } else {
@@ -188,19 +203,24 @@ export default function ApiKeysPage() {
           requestCount: 0,
         };
         
-        // Add to state
+        // Add to state immediately
         const updatedKeys = [...apiKeys, newKey];
         setApiKeys(updatedKeys);
         
-        // Save to localStorage
-        localStorage.setItem('apiKeys', JSON.stringify(updatedKeys));
+        // Save full key to localStorage (wallet-specific) so it persists
+        if (walletAddress) {
+          const storageKey = `apiKeys_${walletAddress}`;
+          localStorage.setItem(storageKey, JSON.stringify(updatedKeys));
+          console.log('💾 Saved new key to localStorage for wallet:', walletAddress);
+        }
         
-        setSuccess(`API key created and saved to database! Key: ${fullApiKey.substring(0, 20)}...`);
+        setSuccess(`✅ API key created successfully! Copy it now and save it securely.`);
+        setNewlyCreatedKey(fullApiKey); // Show in special alert box
         setNewKeyName('');
         setShowCreateForm(false);
         
-        // Refresh from backend after 2 seconds to get updated data
-        setTimeout(() => fetchData(), 2000);
+        // DON'T refresh from backend - that would replace the full key with just the prefix
+        // The key is already saved in localStorage and will persist across sessions
       } else {
         throw new Error(result.error?.message || 'Failed to create API key');
       }
@@ -230,8 +250,12 @@ export default function ApiKeysPage() {
         const updatedKeys = apiKeys.filter(key => key.id !== keyId);
         setApiKeys(updatedKeys);
         
-        // Update localStorage
-        localStorage.setItem('apiKeys', JSON.stringify(updatedKeys));
+        // Update localStorage (wallet-specific)
+        if (walletAddress) {
+          const storageKey = `apiKeys_${walletAddress}`;
+          localStorage.setItem(storageKey, JSON.stringify(updatedKeys));
+          console.log('🗑️ Deleted key from localStorage for wallet:', walletAddress);
+        }
         
         setSuccess('API key deleted successfully from database');
       } else {
@@ -345,6 +369,45 @@ export default function ApiKeysPage() {
         {success && (
           <div className="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg">
             <p className="text-green-700">{success}</p>
+          </div>
+        )}
+
+        {/* Newly Created Key Alert - Special Highlight */}
+        {newlyCreatedKey && (
+          <div className="mb-6 p-6 bg-orange-50 border-2 border-orange-500 rounded-xl shadow-lg">
+            <div className="flex items-start gap-4">
+              <div className="flex-shrink-0">
+                <svg className="w-8 h-8 text-orange-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                </svg>
+              </div>
+              <div className="flex-1">
+                <h3 className="text-lg font-bold text-gray-900 mb-2">🎉 Your New API Key (Save This Now!)</h3>
+                <p className="text-sm text-gray-700 mb-4">
+                  This is the only time you'll see the full key. Copy it and save it securely. It's already saved in your browser's localStorage.
+                </p>
+                <div className="flex items-center gap-2 mb-4">
+                  <code className="flex-1 px-4 py-3 bg-white border-2 border-orange-300 rounded-lg text-sm font-mono text-gray-900 break-all">
+                    {newlyCreatedKey}
+                  </code>
+                  <button
+                    onClick={() => {
+                      handleCopyKey(newlyCreatedKey);
+                      setTimeout(() => setNewlyCreatedKey(null), 3000); // Hide after copying
+                    }}
+                    className="px-6 py-3 bg-orange-600 text-white rounded-lg font-semibold hover:bg-orange-700 transition-colors flex-shrink-0"
+                  >
+                    {copiedKey === newlyCreatedKey ? '✓ Copied!' : 'Copy Key'}
+                  </button>
+                </div>
+                <button
+                  onClick={() => setNewlyCreatedKey(null)}
+                  className="text-sm text-orange-600 hover:text-orange-800 underline"
+                >
+                  I've saved it, dismiss this
+                </button>
+              </div>
+            </div>
           </div>
         )}
 
