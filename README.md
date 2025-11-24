@@ -1,5 +1,13 @@
 Qwery - Solana API Platform
 
+[![Node.js](https://img.shields.io/badge/node-%3E=_18-green.svg)](https://nodejs.org/)
+[![JavaScript](https://img.shields.io/badge/javascript-ES2022-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
+[![GraphQL](https://img.shields.io/badge/graph-ql-E10098.svg)](https://graphql.org/)
+[![Apollo Server](https://img.shields.io/badge/Apollo%20Server-4.x-1e90ff.svg)](https://www.apollographql.com/docs/apollo-server/)
+[![npm version](https://img.shields.io/npm/v/your-package-name.svg)](https://www.npmjs.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
+
 **Qwery** is a comprehensive Solana blockchain data API platform with Phantom wallet authentication, API key management, and real-time token analytics.
 
 ---
