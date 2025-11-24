@@ -313,7 +313,7 @@ export default function DashboardPage() {
       </nav>
 
       {/* Main Content */}
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-20 sm:pb-32 w-full">
         {/* Welcome Section */}
         <div className="mb-6 sm:mb-8">
           <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
@@ -339,12 +339,12 @@ export default function DashboardPage() {
         
         {/* Chart Section */}
         {stats?.dailyUsage && stats.dailyUsage.length > 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100">
+          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 min-h-[400px]">
             <h3 className="text-xl font-bold text-gray-900 mb-6">Usage Over Time</h3>
             <Line data={chartData} options={chartOptions} />
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm p-12 border border-gray-100 text-center">
+          <div className="bg-white rounded-xl shadow-sm p-12 border border-gray-100 text-center min-h-[400px] flex flex-col items-center justify-center">
             <h3 className="text-xl font-semibold text-gray-900 mb-2">No Usage Data Yet</h3>
             <p className="text-gray-600 mb-6">Start making API requests to see your usage statistics</p>
             <Link
