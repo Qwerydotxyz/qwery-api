@@ -44,14 +44,14 @@ export default function ApiKeysPage() {
 
     if (ready && !authenticated) {
       router.push('/');
-    } else if (ready && authenticated) {
-      // Wait a bit for wallets to load
+    } else if (ready && authenticated && !walletAddress) {
+      // Only fetch if we don't have wallet address yet
       const timer = setTimeout(() => {
         fetchData();
       }, 1000);
       return () => clearTimeout(timer);
     }
-  }, [ready, authenticated, router]);
+  }, [ready, authenticated, router, walletAddress]);
 
   const fetchData = async () => {
     try {
@@ -141,22 +141,29 @@ export default function ApiKeysPage() {
         }
 
         // Transform backend data and merge with stored full keys
-        const transformedKeys = authResult.data.apiKeys.map((key: any) => ({
-          id: key.id,
-          key: fullKeysMap[key.id] || key.keyPrefix, // Use full key if available, otherwise prefix
-          name: key.name,
-          createdAt: key.createdAt,
-          lastUsed: key.lastUsedAt,
-          requestCount: key.requestCount || 0,
-        }));
+        const transformedKeys = authResult.data.apiKeys.map((key: any) => {
+          // Always use full key from localStorage if available, never overwrite with prefix
+          const fullKey = fullKeysMap[key.id];
+          return {
+            id: key.id,
+            key: fullKey || key.keyPrefix, // Use full key if available, otherwise prefix
+            name: key.name,
+            createdAt: key.createdAt,
+            lastUsed: key.lastUsedAt,
+            requestCount: key.requestCount || 0,
+          };
+        });
         
         console.log('🔑 Total API keys loaded:', transformedKeys.length);
         console.log('💾 Full keys preserved:', Object.keys(fullKeysMap).length);
         
         setApiKeys(transformedKeys);
         
-        // Update localStorage with merged data (wallet-specific)
+        // Save back to localStorage, preserving full keys
+        // This ensures full keys are never lost even after navigation
         localStorage.setItem(storageKey, JSON.stringify(transformedKeys));
+        console.log('💾 Saved to localStorage:', transformedKeys.length, 'keys');
+        console.log('🔑 With full keys:', transformedKeys.filter(k => k.key.length > 20).length);
         
         setError('');
       } else {
@@ -178,6 +185,12 @@ export default function ApiKeysPage() {
     setCreating(true);
 
     try {
+      if (!walletAddress) {
+        setError('Wallet address not found. Please reconnect your wallet.');
+        setCreating(false);
+        return;
+      }
+
       // Call backend API to create key
       const response = await fetch(`${API_V1_URL}/dashboard/api-keys`, {
         method: 'POST',
@@ -186,6 +199,7 @@ export default function ApiKeysPage() {
         },
         body: JSON.stringify({
           name: newKeyName || 'My API Key',
+          walletAddress: walletAddress, // Send wallet address to associate key with user
         }),
       });
 
@@ -239,8 +253,13 @@ export default function ApiKeysPage() {
     }
 
     try {
+      if (!walletAddress) {
+        setError('Wallet address not found. Please reconnect your wallet.');
+        return;
+      }
+
       // Call backend API to delete
-      const response = await fetch(`${API_V1_URL}/dashboard/api-keys/${keyId}`, {
+      const response = await fetch(`${API_V1_URL}/dashboard/api-keys/${keyId}?walletAddress=${encodeURIComponent(walletAddress)}`, {
         method: 'DELETE',
       });
 

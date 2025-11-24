@@ -14,15 +14,15 @@ const generateApiKey = () => {
 };
 
 /**
- * Get rate limit based on plan type
+ * Get rate limit based on plan type (requests per hour)
  */
 const getRateLimitForPlan = (planType) => {
   const limits = {
-    free: 1000,
-    pro: 10000,
-    enterprise: 100000
+    free: 10000,      // 10k requests/hour
+    pro: 100000,      // 100k requests/hour
+    enterprise: 1000000 // 1M requests/hour
   };
-  return limits[planType] || 1000;
+  return limits[planType] || 10000;
 };
 
 /**
@@ -31,11 +31,27 @@ const getRateLimitForPlan = (planType) => {
  */
 const createApiKey = async (req, res) => {
   try {
-    const { name } = req.body;
+    const { name, walletAddress } = req.body;
     
-    // Use Guest User if no authentication
-    const userId = req.user?.id || 'guest-user-id';
-    const planType = req.user?.planType || 'free';
+    // Get user ID - prefer wallet address lookup, then auth, then guest
+    let userId = req.user?.id || 'guest-user-id';
+    let planType = req.user?.planType || 'free';
+    
+    // If wallet address provided, find the user by wallet
+    if (walletAddress) {
+      const user = await prisma.user.findUnique({
+        where: { walletAddress },
+        select: { id: true, planType: true }
+      });
+      
+      if (user) {
+        userId = user.id;
+        planType = user.planType;
+        console.log('✅ Found user by wallet:', walletAddress, '-> userId:', userId);
+      } else {
+        console.warn('⚠️ User not found for wallet:', walletAddress);
+      }
+    }
 
     // Check how many active keys user has
     const activeKeysCount = await prisma.apiKey.count({
@@ -45,11 +61,11 @@ const createApiKey = async (req, res) => {
       }
     });
 
-    // Limit based on plan (free: 10 for demo, pro: 50, enterprise: unlimited)
+    // Limit based on plan (free: 100, pro: 500, enterprise: unlimited)
     const keyLimits = {
-      free: 10,
-      pro: 50,
-      enterprise: 999
+      free: 100,
+      pro: 500,
+      enterprise: 9999
     };
 
     const limit = keyLimits[planType] || 10;
@@ -242,7 +258,22 @@ const updateApiKey = async (req, res) => {
 const deleteApiKey = async (req, res) => {
   try {
     const { id } = req.params;
-    const userId = req.user?.id || 'guest-user-id';
+    const { walletAddress } = req.query;
+    
+    let userId = req.user?.id || 'guest-user-id';
+    
+    // If wallet address provided, find the user by wallet
+    if (walletAddress) {
+      const user = await prisma.user.findUnique({
+        where: { walletAddress },
+        select: { id: true }
+      });
+      
+      if (user) {
+        userId = user.id;
+        console.log('✅ Delete: Found user by wallet:', walletAddress, '-> userId:', userId);
+      }
+    }
 
     // Check if API key belongs to user
     const apiKey = await prisma.apiKey.findFirst({
