@@ -4,7 +4,7 @@ Qwery - Solana API Platform
 [![JavaScript](https://img.shields.io/badge/javascript-ES2022-yellow.svg)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![GraphQL](https://img.shields.io/badge/graph-ql-E10098.svg)](https://graphql.org/)
 [![Apollo Server](https://img.shields.io/badge/Apollo%20Server-4.x-1e90ff.svg)](https://www.apollographql.com/docs/apollo-server/)
-[![npm version](https://img.shields.io/npm/v/your-package-name.svg)](https://www.npmjs.com/)
+[![npm version](https://img.shields.io/npm/v/your-package-name.svg)]([https://www.npmjs.com/](https://github.com/Qwerydotxyz/qwery-sdk))
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 
