@@ -12,11 +12,13 @@
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+/* 
+  Theme variables are handled by class .dark 
+  We rely on ThemeProvider to detect system preference and apply the class.
+*/
+:root.dark {
+  --background: #000000;
+  --foreground: #ededed;
 }
 
 /* Full screen stretch */
@@ -38,26 +40,17 @@ body {
   overflow-x: hidden; /* Prevent horizontal scroll */
 }
 
-/* Ensure smooth scrolling */
-html {
-  scroll-behavior: smooth;
-}
-
-/* Responsive utilities */
-@media (max-width: 640px) {
-  body {
-    font-size: 14px;
-  }
-}
-
-@media (min-width: 641px) and (max-width: 1024px) {
-  body {
-    font-size: 15px;
-  }
-}
-
-@media (min-width: 1025px) {
-  body {
-    font-size: 16px;
-  }
+/* 
+  SMOOTH THEME TRANSITION
+  This class is added to html during theme toggle to smoothly fade all colors.
+  It targets all elements to ensure every background, border, and text color transitions.
+*/
+.theme-transition,
+.theme-transition *,
+.theme-transition *::before,
+.theme-transition *::after {
+  transition-property: background-color, border-color, color, fill, stroke, box-shadow !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+  transition-duration: 500ms !important;
+  transition-delay: 0s !important;
 }
