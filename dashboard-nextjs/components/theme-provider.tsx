@@ -12,20 +12,24 @@ interface ThemeContextType {
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme] = useState<Theme>('light'); // Always light mode
+  const [theme] = useState<Theme>('dark'); // Always dark mode
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    // Force light mode - remove dark class if it exists
-    document.documentElement.classList.remove('dark');
-    // Clear any saved theme
-    localStorage.removeItem('theme');
+    
+    // FORCE dark mode - always apply dark class
+    document.documentElement.classList.add('dark');
+    
+    // Save to localStorage so it persists
+    localStorage.setItem('theme', 'dark');
+    
+    console.log('🌑 Dark mode is now permanent');
   }, []);
 
   const toggleTheme = () => {
-    // Disabled - do nothing
-    console.log('Dark mode is disabled');
+    // Disabled - always stay dark
+    console.log('Theme is locked to dark mode');
   };
 
   if (!mounted) {

@@ -6,22 +6,22 @@ import { Twitter, Github, Youtube } from "lucide-react"
 
 export function Footer() {
   return (
-    <footer className="relative z-20 border-t border-gray-200 bg-white">
+    <footer className="relative z-20 border-t border-gray-200 dark:border-neutral-800 bg-white dark:bg-black transition-colors duration-500">
       <div className="container mx-auto px-6 lg:px-12 py-8 md:py-10">
         <div className="flex items-center gap-2 mb-6 md:mb-8 animate-fade-in-up">
           <Image src="/cropped_circle_image.png" alt="Qwery Logo" width={40} height={40} className="w-10 h-10" />
-          <span className="font-mono text-lg font-semibold text-gray-900">qwery</span>
+          <span className="font-mono text-lg font-semibold text-gray-900 dark:text-white">qwery</span>
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 md:gap-8 mb-8 md:mb-10">
           {/* Product Column */}
           <div className="animate-fade-in-up animation-delay-100">
-            <h3 className="font-semibold text-sm mb-4 text-gray-900">Product</h3>
+            <h3 className="font-semibold text-sm mb-4 text-gray-900 dark:text-white">Product</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Website
                 </Link>
@@ -29,7 +29,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/dashboard"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Dashboard
                 </Link>
@@ -37,7 +37,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/documentation"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Documentation
                 </Link>
@@ -47,7 +47,7 @@ export function Footer() {
                   href="https://www.npmjs.com/package/@qwery/sdk"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   npm Package
                 </Link>
@@ -57,12 +57,12 @@ export function Footer() {
 
           {/* Platform Column */}
           <div className="animate-fade-in-up animation-delay-200">
-            <h3 className="font-semibold text-sm mb-4 text-gray-900">Platform</h3>
+            <h3 className="font-semibold text-sm mb-4 text-gray-900 dark:text-white">Platform</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/documentation"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Qwery API
                 </Link>
@@ -70,7 +70,7 @@ export function Footer() {
               <li>
                 <Link
                   href="/documentation#x402"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   x402 Facilitator
                 </Link>
@@ -80,7 +80,7 @@ export function Footer() {
                   href="https://github.com/Qwerydotxyz/qwery-sdk-ts"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   SDK (TypeScript)
                 </Link>
@@ -90,7 +90,7 @@ export function Footer() {
                   href="https://github.com/Qwerydotxyz/qwery-sdk-rust"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   SDK (Rust)
                 </Link>
@@ -100,12 +100,12 @@ export function Footer() {
 
           {/* Support Column */}
           <div className="animate-fade-in-up animation-delay-300">
-            <h3 className="font-semibold text-sm mb-4 text-gray-900">Support</h3>
+            <h3 className="font-semibold text-sm mb-4 text-gray-900 dark:text-white">Support</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/documentation"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Documentation
                 </Link>
@@ -115,7 +115,7 @@ export function Footer() {
                   href="https://discord.com/invite/qwerydotxyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Discord
                 </Link>
@@ -123,7 +123,7 @@ export function Footer() {
               <li>
                 <Link
                   href="mailto:support@qwery.xyz"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Contact Us
                 </Link>
@@ -133,12 +133,12 @@ export function Footer() {
 
           {/* Company Column */}
           <div className="animate-fade-in-up animation-delay-400">
-            <h3 className="font-semibold text-sm mb-4 text-gray-900">Company</h3>
+            <h3 className="font-semibold text-sm mb-4 text-gray-900 dark:text-white">Company</h3>
             <ul className="space-y-3">
               <li>
                 <Link
                   href="/#about"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   About
                 </Link>
@@ -148,13 +148,13 @@ export function Footer() {
                   href="https://medium.com/@qwerydotxyz"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="text-sm text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+                  className="text-sm text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
                 >
                   Blog
                 </Link>
               </li>
               <li>
-                <span className="text-sm text-gray-400">Careers - Soon</span>
+                <span className="text-sm text-gray-400 dark:text-gray-500">Careers - Soon</span>
               </li>
             </ul>
           </div>
@@ -163,12 +163,12 @@ export function Footer() {
         <div className="flex flex-col items-center gap-3 pt-6 border-t border-gray-200 animate-fade-in-up animation-delay-500">
           {/* Terms and Privacy - Centered */}
           <div className="flex items-center gap-6 text-sm">
-            <Link href="/terms" className="text-gray-600 hover:text-[#F29146] transition-colors duration-300">
+            <Link href="/terms" className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300">
               Terms
             </Link>
             <Link
               href="/privacy"
-              className="text-gray-600 hover:text-[#F29146] transition-colors duration-300"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-colors duration-300"
             >
               Privacy
             </Link>
@@ -183,7 +183,7 @@ export function Footer() {
               href="https://x.com/qwerydotxyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
               aria-label="Twitter"
             >
               <Twitter className="w-5 h-5" />
@@ -192,7 +192,7 @@ export function Footer() {
               href="https://github.com/Qwerydotxyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
               aria-label="GitHub"
             >
               <Github className="w-5 h-5" />
@@ -201,7 +201,7 @@ export function Footer() {
               href="https://discord.com/invite/qwerydotxyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
               aria-label="Discord"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
@@ -212,7 +212,7 @@ export function Footer() {
               href="https://www.youtube.com/@qwerydotxyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
               aria-label="YouTube"
             >
               <Youtube className="w-5 h-5" />
@@ -221,7 +221,7 @@ export function Footer() {
               href="https://medium.com/@qwerydotxyz"
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-600 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
+              className="text-gray-600 dark:text-neutral-500 hover:text-[#F29146] transition-all duration-300 hover:scale-110"
               aria-label="Medium"
             >
               <svg className="w-5 h-5" viewBox="0 0 24 24" fill="currentColor">
