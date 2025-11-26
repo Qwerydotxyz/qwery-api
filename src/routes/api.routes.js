@@ -1,6 +1,7 @@
 // src/routes/api.routes.js
 const express = require('express');
 const { validate } = require('../utils/validator');
+const { validateApiKey, logApiUsage } = require('../middleware/apiKey.middleware');
 
 // Import controllers
 const { getTokenPrice } = require('../controllers/tokenPrice.controller');
@@ -21,6 +22,10 @@ const { getRaydiumTopGraduating } = require('../controllers/raydiumTopGraduating
 const { getRaydiumGraduated } = require('../controllers/raydiumGraduated.controller');
 
 const router = express.Router();
+
+// Apply API key validation and usage logging to all routes
+router.use(validateApiKey);
+router.use(logApiUsage);
 
 // Validation schemas
 const tokenPriceSchema = {

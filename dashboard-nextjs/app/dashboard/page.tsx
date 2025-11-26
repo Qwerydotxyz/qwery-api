@@ -201,10 +201,10 @@ export default function DashboardPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-white flex items-center justify-center">
+      <div className="min-h-screen bg-black flex items-center justify-center">
         <div className="text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-orange-500 mx-auto mb-4"></div>
-          <p className="text-gray-600">Loading dashboard...</p>
+          <p className="text-gray-400">Loading dashboard...</p>
           <p className="text-gray-500 text-sm mt-2">Connecting to wallet...</p>
         </div>
       </div>
@@ -212,51 +212,51 @@ export default function DashboardPage() {
   }
 
   return (
-    <div className="min-h-screen h-full bg-white flex flex-col">
+    <div className="min-h-screen h-full bg-black flex flex-col">
       {/* Navigation */}
-      <nav className="bg-white border-b border-gray-100 sticky top-0 z-50">
+      <nav className="bg-black border-b border-gray-800 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center space-x-4 sm:space-x-8">
               <div className="flex items-center space-x-2">
                 <img src="/cropped_circle_image.png" alt="Qwery Logo" className="w-6 h-6 sm:w-8 sm:h-8" />
-                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-gray-900">
+                <h1 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                   Qwery
                 </h1>
               </div>
               <div className="hidden lg:flex space-x-2 xl:space-x-4">
                 <Link
                   href="/dashboard"
-                  className="px-3 py-2 rounded-lg text-orange-600 bg-orange-50 font-semibold"
+                  className="px-3 py-2 rounded-lg text-orange-500 bg-orange-500/10 font-semibold"
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/api-keys"
-                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
                 >
                   API Keys
                 </Link>
                 <Link
                   href="/documentation"
-                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                  className="px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
                 >
                   Documentation
                 </Link>
               </div>
             </div>
             <div className="flex items-center space-x-2 sm:space-x-4">
-              <span className="hidden sm:inline text-xs sm:text-sm md:text-base text-gray-700 font-medium truncate max-w-[100px] sm:max-w-[150px] md:max-w-none">{user?.name}</span>
+              <span className="hidden sm:inline text-xs sm:text-sm md:text-base text-gray-300 font-medium truncate max-w-[100px] sm:max-w-[150px] md:max-w-none">{user?.name}</span>
               <button
                 onClick={handleLogout}
-                className="hidden sm:block px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors text-xs sm:text-sm"
+                className="hidden sm:block px-3 sm:px-4 py-1.5 sm:py-2 bg-gray-800 text-gray-300 rounded-lg hover:bg-gray-700 transition-colors text-xs sm:text-sm"
               >
                 Logout
               </button>
               {/* Mobile menu button */}
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="lg:hidden p-2 rounded-lg text-gray-700 hover:bg-gray-100 transition-colors"
+                className="lg:hidden p-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   {mobileMenuOpen ? (
@@ -271,37 +271,37 @@ export default function DashboardPage() {
           
           {/* Mobile menu */}
           {mobileMenuOpen && (
-            <div className="lg:hidden py-4 border-t border-gray-100">
+            <div className="lg:hidden py-4 border-t border-gray-800">
               <div className="flex flex-col space-y-2">
                 <Link
                   href="/dashboard"
-                  className="px-3 py-2 rounded-lg text-orange-600 bg-orange-50 font-semibold"
+                  className="px-3 py-2 rounded-lg text-orange-500 bg-orange-500/10 font-semibold"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Dashboard
                 </Link>
                 <Link
                   href="/api-keys"
-                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   API Keys
                 </Link>
                 <Link
                   href="/documentation"
-                  className="px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                  className="px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
                   onClick={() => setMobileMenuOpen(false)}
                 >
                   Documentation
                 </Link>
-                <div className="pt-2 border-t border-gray-100">
-                  <p className="px-3 py-2 text-sm text-gray-600">{user?.name}</p>
+                <div className="pt-2 border-t border-gray-800">
+                  <p className="px-3 py-2 text-sm text-gray-400">{user?.name}</p>
                   <button
                     onClick={() => {
                       setMobileMenuOpen(false);
                       handleLogout();
                     }}
-                    className="w-full text-left px-3 py-2 rounded-lg text-gray-700 hover:bg-gray-50 transition-colors"
+                    className="w-full text-left px-3 py-2 rounded-lg text-gray-300 hover:bg-gray-800 transition-colors"
                   >
                     Logout
                   </button>
@@ -316,19 +316,19 @@ export default function DashboardPage() {
       <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 pb-20 sm:pb-32 w-full">
         {/* Welcome Section */}
         <div className="mb-6 sm:mb-8">
-          <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
+          <h2 className="text-2xl sm:text-3xl font-bold text-white mb-2">
             Welcome back, {user?.name}! 👋
           </h2>
-          <p className="text-sm sm:text-base text-gray-600">Here's your API usage overview</p>
+          <p className="text-sm sm:text-base text-gray-400">Here's your API usage overview</p>
         </div>
 
         {/* Error Message */}
         {error && (
-          <div className="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700">{error}</p>
+          <div className="mb-6 p-4 bg-red-900/20 border border-red-800 rounded-lg">
+            <p className="text-red-400">{error}</p>
             <button
               onClick={() => fetchDashboardData()}
-              className="mt-2 text-sm text-red-600 hover:text-red-800 underline"
+              className="mt-2 text-sm text-red-400 hover:text-red-300 underline"
             >
               Try Again
             </button>
@@ -339,14 +339,14 @@ export default function DashboardPage() {
         
         {/* Chart Section */}
         {stats?.dailyUsage && stats.dailyUsage.length > 0 ? (
-          <div className="bg-white rounded-xl shadow-sm p-6 border border-gray-100 min-h-[400px]">
-            <h3 className="text-xl font-bold text-gray-900 mb-6">Usage Over Time</h3>
+          <div className="bg-black rounded-xl shadow-sm p-6 border border-gray-800 min-h-[400px]">
+            <h3 className="text-xl font-bold text-white mb-6">Usage Over Time</h3>
             <Line data={chartData} options={chartOptions} />
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm p-12 border border-gray-100 text-center min-h-[400px] flex flex-col items-center justify-center">
-            <h3 className="text-xl font-semibold text-gray-900 mb-2">No Usage Data Yet</h3>
-            <p className="text-gray-600 mb-6">Start making API requests to see your usage statistics</p>
+          <div className="bg-black rounded-xl shadow-sm p-12 border border-gray-800 text-center min-h-[400px] flex flex-col items-center justify-center">
+            <h3 className="text-xl font-semibold text-white mb-2">No Usage Data Yet</h3>
+            <p className="text-gray-400 mb-6">Start making API requests to see your usage statistics</p>
             <Link
               href="/api-keys"
               className="inline-block px-6 py-3 bg-orange-500 text-white rounded-lg font-semibold hover:bg-orange-600 transition-colors"

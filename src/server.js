@@ -60,14 +60,14 @@ app.get('/health', (req, res) => {
   });
 });
 
-// API routes
-app.use(config.api.prefix, apiRoutes);
-
-// Dashboard routes
+// Dashboard routes (must come before general API routes to avoid middleware)
 app.use('/api/v1/dashboard', dashboardRoutes);
 
 // Auth routes (wallet authentication)
 app.use('/api/v1/auth', authRoutes);
+
+// API routes (with API key protection - register last to avoid catching dashboard/auth)
+app.use(config.api.prefix, apiRoutes);
 
 // Note: Frontend is now served separately via Next.js on port 3001
 // Old Svelte dashboard has been removed - see dashboard-nextjs folder
@@ -80,7 +80,7 @@ app.use(errorMiddleware);
 
 // Start server
 const PORT = config.port;
-app.listen(PORT, () => {
+const server = app.listen(PORT, () => {
   console.log(`
 ╔═══════════════════════════════════════════════════════╗
 ║                                                       ║

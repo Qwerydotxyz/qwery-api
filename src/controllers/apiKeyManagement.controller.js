@@ -197,7 +197,7 @@ const updateApiKey = async (req, res) => {
     // Check if API key belongs to user
     const apiKey = await prisma.apiKey.findFirst({
       where: {
-        id,
+        id: String(id),
         userId
       }
     });
@@ -215,7 +215,7 @@ const updateApiKey = async (req, res) => {
 
     // Update API key
     const updatedKey = await prisma.apiKey.update({
-      where: { id },
+      where: { id: String(id) },
       data: {
         ...(name && { name }),
         ...(typeof isActive === 'boolean' && { isActive })
@@ -278,7 +278,7 @@ const deleteApiKey = async (req, res) => {
     // Check if API key belongs to user
     const apiKey = await prisma.apiKey.findFirst({
       where: {
-        id,
+        id: String(id), // Ensure id is a string (UUIDs are strings in the schema)
         userId
       }
     });
@@ -296,7 +296,7 @@ const deleteApiKey = async (req, res) => {
 
     // Delete API key
     await prisma.apiKey.delete({
-      where: { id }
+      where: { id: String(id) }
     });
 
     res.json({
@@ -332,7 +332,7 @@ const getApiKeyUsage = async (req, res) => {
     // Check if API key belongs to user
     const apiKey = await prisma.apiKey.findFirst({
       where: {
-        id,
+        id: String(id),
         userId: req.user.id
       }
     });
@@ -354,7 +354,7 @@ const getApiKeyUsage = async (req, res) => {
     const usageLogs = await prisma.usageLog.groupBy({
       by: ['endpoint'],
       where: {
-        apiKeyId: id,
+        apiKeyId: String(id),
         timestamp: {
           gte: daysAgo
         }
