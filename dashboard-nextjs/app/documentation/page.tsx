@@ -135,7 +135,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'tokenAddresses', type: 'array', required: true, description: 'Array of token contract addresses' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/token-price \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/token-price \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"tokenAddresses": ["So11111111111111111111111111111111111111112"]}'`,
@@ -148,7 +148,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'tokenAddress', type: 'string', required: true, description: 'Token contract address' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/token-metadata \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/token-metadata \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"tokenAddress": "So11111111111111111111111111111111111111112"}'`,
@@ -162,7 +162,7 @@ export default function DocumentationPage() {
         { name: 'mint', type: 'string', required: true, description: 'Token contract address' },
         { name: 'limit', type: 'number', required: false, description: 'Number of holders to return (default: 10)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/top-holders \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/top-holders \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"mint": "So11111111111111111111111111111111111111112", "limit": 20}'`,
@@ -175,7 +175,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of trades to return (default: 20)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/latest-trades \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/latest-trades \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"limit": 50}'`,
@@ -189,7 +189,7 @@ export default function DocumentationPage() {
         { name: 'wallet', type: 'string', required: true, description: 'Wallet address' },
         { name: 'limit', type: 'number', required: false, description: 'Number of trades to return (default: 50)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/wallet-trades \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/wallet-trades \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"wallet": "YOUR_WALLET_ADDRESS", "limit": 100}'`,
@@ -202,7 +202,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of updates to return' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/balance-updates \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/balance-updates \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"limit": 100}'`,
@@ -215,7 +215,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return (default: 50)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/bonding-curve \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/bonding-curve \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"limit": 100}'`,
@@ -228,7 +228,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return (default: 50)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/top-pumpfun-tokens \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/top-pumpfun-tokens \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"limit": 50}'`,
@@ -241,7 +241,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/letsbonk-bonding-curve \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/letsbonk-bonding-curve \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{}'`,
@@ -254,7 +254,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/letsbonk-above-95 \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/letsbonk-above-95 \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{}'`,
@@ -267,7 +267,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/raydium-bonding-curve \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/raydium-bonding-curve \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{}'`,
@@ -280,7 +280,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/raydium-above-95 \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/raydium-above-95 \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{}'`,
@@ -293,7 +293,7 @@ export default function DocumentationPage() {
       parameters: [
         { name: 'limit', type: 'number', required: false, description: 'Number of tokens to return (default: 50)' },
       ],
-      example: `curl -X POST http://localhost:3000/api/v1/raydium-graduated \\
+      example: `curl -X POST https://api.qwery.xyz/api/v1/raydium-graduated \\
   -H "Content-Type: application/json" \\
   -H "X-API-Key: qwery_your_key_here" \\
   -d '{"limit": 50}'`,
@@ -446,7 +446,7 @@ export default function DocumentationPage() {
               <div className="text-orange-500">x-api-key: YOUR_API_KEY</div>
             </div>
             <p>
-              <strong className="text-white">Base URL:</strong> <code className="bg-black px-2 py-1 rounded border border-gray-800 text-gray-300">http://localhost:3000/api/v1</code>
+              <strong className="text-white">Base URL:</strong> <code className="bg-black px-2 py-1 rounded border border-gray-800 text-gray-300">https://api.qwery.xyz/api/v1</code>
             </p>
             <p>
               <strong className="text-white">API Key Header:</strong> <code className="bg-black px-2 py-1 rounded border border-gray-800 text-gray-300">X-API-Key: qwery_your_key_here</code>
