@@ -624,3 +624,4 @@ Your Qwery platform is ready to use!
 ---
 
 **Built with ❤️ using Next.js, Express, Prisma, and Solana**
+
