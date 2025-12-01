@@ -21,14 +21,15 @@ const buildBalanceUpdatesQuery = (address, fromDate = null, toDate = null, limit
   
   return `
     {
-      Solana {
+      Solana(dataset: realtime, network: solana) {
         BalanceUpdates(
           orderBy: {descending: Block_Time}
-          limit: ${limit}
+          limit: {count: ${limit}}
           where: {
             BalanceUpdate: {
               Account: {Address: {is: "${address}"}}
             }${timeFilter}
+            Transaction: {Result: {Success: true}}
           }
         ) {
           Block {

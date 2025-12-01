@@ -35,11 +35,11 @@ const transformTokenPriceData = (bitqueryData) => {
    * @returns {Array} - Transformed trades array
    */
   const transformWalletTradesData = (bitqueryData) => {
-    if (!bitqueryData.Solana?.DEXTrades) {
+    if (!bitqueryData.Solana?.DEXTradeByTokens) {
       return [];
     }
     
-    return bitqueryData.Solana.DEXTrades.map((trade, index) => ({
+    return bitqueryData.Solana.DEXTradeByTokens.map((trade, index) => ({
       tradeId: `${trade.Transaction.Signature}-${index}`,
       timestamp: trade.Block.Time,
       type: trade.Trade.Side.Type || 'unknown',
@@ -48,9 +48,19 @@ const transformTokenPriceData = (bitqueryData) => {
       tokenName: trade.Trade.Currency.Name || 'Unknown',
       amount: parseFloat(trade.Trade.Amount) || 0,
       priceInUSD: parseFloat(trade.Trade.PriceInUSD) || 0,
-      totalValueUSD: (parseFloat(trade.Trade.Amount) || 0) * (parseFloat(trade.Trade.PriceInUSD) || 0),
+      totalValueUSD: parseFloat(trade.Trade.AmountInUSD) || 0,
       dexName: trade.Trade.Dex?.ProtocolName || 'Unknown DEX',
-      transactionSignature: trade.Transaction.Signature
+      transactionSignature: trade.Transaction.Signature,
+      side: {
+        type: trade.Trade.Side.Type,
+        currency: {
+          symbol: trade.Trade.Side.Currency?.Symbol || 'N/A',
+          address: trade.Trade.Side.Currency?.MintAddress,
+          name: trade.Trade.Side.Currency?.Name || 'Unknown'
+        },
+        amount: parseFloat(trade.Trade.Side.Amount) || 0,
+        valueUSD: parseFloat(trade.Trade.Side.AmountInUSD) || 0
+      }
     }));
   };
   

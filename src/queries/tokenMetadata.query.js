@@ -8,16 +8,17 @@
 const buildSimpleTokenMetadataQuery = (tokenAddress) => {
   return `
     {
-      Solana {
+      Solana(dataset: realtime, network: solana) {
         DEXTradeByTokens(
           orderBy: {descending: Block_Time}
-          limit: 1
+          limit: {count: 1}
           where: {
             Trade: {
               Currency: {
                 MintAddress: {is: "${tokenAddress}"}
               }
             }
+            Transaction: {Result: {Success: true}}
           }
         ) {
           Block {

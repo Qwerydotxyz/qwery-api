@@ -15,14 +15,17 @@ const buildWalletTradesQuery = (walletAddress, limit = 50, fromDate = null) => {
     
     return `
       {
-        Solana {
-          DEXTrades(
+        Solana(dataset: realtime, network: solana) {
+          DEXTradeByTokens(
             orderBy: {descending: Block_Time}
-            limit: ${limit}
+            limit: {count: ${limit}}
             where: {
               Trade: {
-                Account: {Address: {is: "${walletAddress}"}}
+                Account: {
+                  Owner: {is: "${walletAddress}"}
+                }
               }${timeFilter}
+              Transaction: {Result: {Success: true}}
             }
           ) {
             Block {
@@ -38,12 +41,21 @@ const buildWalletTradesQuery = (walletAddress, limit = 50, fromDate = null) => {
                 Name
               }
               Amount
+              AmountInUSD
               PriceInUSD
-              Side {
-                Type
-              }
               Dex {
                 ProtocolName
+                ProtocolFamily
+              }
+              Side {
+                Type
+                Currency {
+                  Symbol
+                  MintAddress
+                  Name
+                }
+                Amount
+                AmountInUSD
               }
             }
           }
